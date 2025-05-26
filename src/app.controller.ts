@@ -2,6 +2,7 @@ import { Controller, Post, Get, Delete, Param, UploadedFile, UseInterceptors } f
 import { FileInterceptor } from '@nestjs/platform-express';
 import { AppService } from './app.service';
 import { AzureStorageService } from './azure-storage.service';
+import { Multer } from 'multer';
 
 @Controller()
 export class AppController {
@@ -12,7 +13,7 @@ export class AppController {
 
   @Post('upload')
   @UseInterceptors(FileInterceptor('file'))
-  async uploadFile(@UploadedFile() file: Express.Multer.File) {
+  async uploadFile(@UploadedFile() file: Multer.File) {
     const fileUrl = await this.azureStorageService.uploadFile(file);
     return { url: fileUrl };
   }

@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { BlobServiceClient, ContainerClient } from '@azure/storage-blob';
 import { ConfigService } from '@nestjs/config';
+import { Multer } from 'multer';
 
 @Injectable()
 export class AzureStorageService {
@@ -14,7 +15,7 @@ export class AzureStorageService {
     this.containerClient = blobServiceClient.getContainerClient(containerName);
   }
 
-  async uploadFile(file: Express.Multer.File): Promise<string> {
+  async uploadFile(file: Multer.File): Promise<string> {
     const blobName = `${Date.now()}-${file.originalname}`;
     const blockBlobClient = this.containerClient.getBlockBlobClient(blobName);
     
